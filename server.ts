@@ -7,6 +7,9 @@ dotenv.config()
 
 const PORT = 8000
 const app = express()
+
+//The server running on http://localhost:8000 must be configured with the header option of {'Access-Control-Allow-Origin': 'http://localhost:5173'}
+
 // @ts-ignore
 app.get('/quiz-item', async (req: Request, res: Response) => {
     try {
@@ -22,7 +25,7 @@ app.get('/quiz-item', async (req: Request, res: Response) => {
             const quizItem: QuizData = await response.data.data[process.env.ID]
             res.setHeader(
                 'Access-Control-Allow-Origin',
-                'http://localhost:3000'
+                'http://localhost:5173'
             )
             res.send(quizItem)
         }
