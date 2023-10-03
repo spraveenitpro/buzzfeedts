@@ -2,6 +2,7 @@ import React from 'react'
 import { Content, Question } from '../../interfaces.ts'
 import QuestionBlock from './QuestionBlock.tsx'
 
+
 const QuestionsBlock = ({ quizItem }: { quizItem: Content }) => {
     return (
         <>
