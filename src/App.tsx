@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Title from './components/Title'
-import { QuizData } from '../interfaces.ts'
-
+import { QuizData, Content } from '../interfaces.ts'
+import QuestionsBlock from './components/QuestionsBlock.tsx'
 
 const App = () => {
     const [quiz, setQuiz] = useState<QuizData | null>()
@@ -25,7 +25,10 @@ const App = () => {
 
     return (
         <>
-            <Title />
+            <Title title={quiz?.title} subtitle={quiz?.subtitle} />
+            {quiz?.content.map((content: Content, id: Content['id']) => (
+                <QuestionsBlock key={id} quizItem={content} />
+            ))}
         </>
     )
 }
