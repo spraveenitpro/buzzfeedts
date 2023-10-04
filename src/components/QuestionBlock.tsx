@@ -2,12 +2,18 @@ import React from 'react'
 import { Question } from '../../interfaces.ts'
 
 const QuestionBlock = ({
+    quizItemId,
     question,
+    chosenAnswerItems,
     setChosenAnswerItems,
+    unansweredQuestionIds,
     setUnansweredQuestionIds,
 }: {
+    quizItemId: number
     question: Question
+    chosenAnswerItems: string[]
     setChosenAnswerItems: Function
+    unansweredQuestionIds: number[] | undefined
     setUnansweredQuestionIds: Function
 }) => {
     const handleClick = () => {
@@ -15,9 +21,20 @@ const QuestionBlock = ({
             ...prevState,
             question.text,
         ])
+        setUnansweredQuestionIds(
+            unansweredQuestionIds?.filter((id: number) => id !== quizItemId)
+        )
     }
+
+    const validPick =
+        !chosenAnswerItems?.includes(question.text) &&
+        !unansweredQuestionIds?.includes(quizItemId)
     return (
-        <button className="question-block" onClick={handleClick}>
+        <button
+            className="question-block"
+            onClick={handleClick}
+            disabled={validPick}
+        >
             <img src={question.image} alt={question.alt} />
             <h3>{question.text}</h3>
             <p>

@@ -4,12 +4,16 @@ import QuestionBlock from './QuestionBlock.tsx'
 
 const QuestionsBlock = ({
     quizItem,
+    chosenAnswerItems,
     setChosenAnswerItems,
     setUnansweredQuestionIds,
+    unansweredQuestionIds,
 }: {
     quizItem: Content
+    chosenAnswerItems: string[]
     setChosenAnswerItems: Function
     setUnansweredQuestionIds: Function
+    unansweredQuestionIds: number[] | undefined
 }) => {
     return (
         <>
@@ -21,9 +25,12 @@ const QuestionsBlock = ({
                     (question: Question, _index: number) => (
                         <QuestionBlock
                             key={_index}
+                            quizItemId={quizItem.id}
                             question={question}
+                            chosenAnswerItems={chosenAnswerItems}
                             setChosenAnswerItems={setChosenAnswerItems}
                             setUnansweredQuestionIds={setUnansweredQuestionIds}
+                            unansweredQuestionIds={unansweredQuestionIds}
                         />
                     )
                 )}
