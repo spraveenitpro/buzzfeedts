@@ -5,7 +5,11 @@ import QuestionsBlock from './components/QuestionsBlock.tsx'
 
 const App = () => {
     const [quiz, setQuiz] = useState<QuizData | null>()
-    console.log('About to fetch')
+    const [chosenAnswerItems, setChosenAnswerItems] = useState<string[]>([])
+    const [unansweredQuestionIds, setUnansweredQuestionIds] = useState<
+        number[] | undefined
+    >([])
+    console.log(chosenAnswerItems)
     const fetchData = async () => {
         try {
             const response = await fetch('http://localhost:8000/quiz-item')
@@ -21,14 +25,25 @@ const App = () => {
         fetchData()
     }, [])
 
+    useEffect(() => {
+        const unansweredIds = quiz?.content?.map(({ id }: Content) => id)
+        setUnansweredQuestionIds(unansweredIds)
+    }, [quiz])
     console.log(quiz)
 
     return (
         <>
-            <Title title={quiz?.title} subtitle={quiz?.subtitle} />
-            {quiz?.content.map((content: Content, id: Content['id']) => (
-                <QuestionsBlock key={id} quizItem={content} />
-            ))}
+            <div className="app">
+                <Title title={quiz?.title} subtitle={quiz?.subtitle} />
+                {quiz?.content.map((content: Content, id: Content['id']) => (
+                    <QuestionsBlock
+                        key={id}
+                        quizItem={content}
+                        setChosenAnswerItems={setChosenAnswerItems}
+                        setUnansweredQuestionIds={setUnansweredQuestionIds}
+                    />
+                ))}
+            </div>
         </>
     )
 }
