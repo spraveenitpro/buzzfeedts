@@ -1,26 +1,29 @@
-import React from 'react'
-import { Content, Question } from '../../interfaces.ts'
-import QuestionBlock from './QuestionBlock.tsx'
+import React, { forwardRef } from 'react'
+import { Content, Question } from '../../interfaces'
+import QuestionBlock from './QuestionBlock'
 
-const QuestionsBlock = ({
-    quizItem,
-    chosenAnswerItems,
-    setChosenAnswerItems,
-    setUnansweredQuestionIds,
-    unansweredQuestionIds,
-}: {
-    quizItem: Content
-    chosenAnswerItems: string[]
-    setChosenAnswerItems: Function
-    setUnansweredQuestionIds: Function
-    unansweredQuestionIds: number[] | undefined
-}) => {
+const QuestionsBlock = (
+    {
+        quizItem,
+        chosenAnswerItems,
+        setChosenAnswerItems,
+        unansweredQuestionIds,
+        setUnansweredQuestionIds,
+    }: {
+        quizItem: Content
+        chosenAnswerItems: string[]
+        setChosenAnswerItems: Function
+        unansweredQuestionIds: number[] | undefined
+        setUnansweredQuestionIds: Function
+    },
+    ref: React.LegacyRef<HTMLHeadingElement> | undefined
+) => {
     return (
         <>
-            <h2 className="title-block" id={String(quizItem.id)}>
+            <h2 ref={ref} className="title-block">
                 {quizItem.text}
             </h2>
-            <div className="questions-container	">
+            <div className="questions-container">
                 {quizItem?.questions.map(
                     (question: Question, _index: number) => (
                         <QuestionBlock
@@ -29,8 +32,8 @@ const QuestionsBlock = ({
                             question={question}
                             chosenAnswerItems={chosenAnswerItems}
                             setChosenAnswerItems={setChosenAnswerItems}
-                            setUnansweredQuestionIds={setUnansweredQuestionIds}
                             unansweredQuestionIds={unansweredQuestionIds}
+                            setUnansweredQuestionIds={setUnansweredQuestionIds}
                         />
                     )
                 )}
@@ -39,4 +42,4 @@ const QuestionsBlock = ({
     )
 }
 
-export default QuestionsBlock
+export default forwardRef(QuestionsBlock)
